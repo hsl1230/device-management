@@ -40,18 +40,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI productApi() {
         return new OpenAPI()
-                .addTagsItem(new Tag().name("Primary User Profile"))
-                .addTagsItem(new Tag().name("Sub User Profile"))
-                .addTagsItem(new Tag().name("User Profile Link"))
-                .addTagsItem(new Tag().name("User Profile"))
-                .addTagsItem(new Tag().name("User Public Attribute"))
-                .addTagsItem(new Tag().name("User Private Attribute"))
-                .addTagsItem(new Tag().name("User Attribute"))
-                .addTagsItem(new Tag().name("Vertical"))
-                .addTagsItem(new Tag().name("Vertical Role"))
-                .addTagsItem(new Tag().name("Vertical Role Permissions"))
-                .addTagsItem(new Tag().name("User Vertical Permissions"))
-                .addTagsItem(new Tag().name("User Vertical Enablement"))
+                .addTagsItem(new Tag().name("Device Profile"))
+                .addTagsItem(new Tag().name("Device"))
                 .info(apiInfo());
     }
 
