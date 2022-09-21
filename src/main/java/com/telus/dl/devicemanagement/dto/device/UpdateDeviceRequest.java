@@ -25,7 +25,7 @@ public class UpdateDeviceRequest {
     private String ipAddress;
 
     @JsonProperty(value = "position")
-    private Position position;
+    private PositionDto position;
 
     @JsonProperty(value = "labels")
     private Map<String, String> labels;

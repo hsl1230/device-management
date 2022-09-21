@@ -1,8 +1,6 @@
 package com.telus.dl.devicemanagement.dto.deviceprofile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.telus.dl.devicemanagement.document.device.Position;
-import com.telus.dl.devicemanagement.document.deviceprofile.DeviceProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -18,7 +16,7 @@ public class UpdateDeviceProfileRequest {
     private String name;
 
     @JsonProperty(value = "deviceProperties")
-    private List<DeviceProperty> deviceProperties;
+    private List<DevicePropertyDto> deviceProperties;
 
     @JsonProperty(value = "manufacturer")
     private String manufacturer;
