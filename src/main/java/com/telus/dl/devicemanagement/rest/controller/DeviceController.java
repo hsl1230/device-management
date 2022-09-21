@@ -1,7 +1,7 @@
 package com.telus.dl.devicemanagement.rest.controller;
 
-import com.telus.dl.devicemanagement.document.device.Device;
-import com.telus.dl.devicemanagement.dto.UpdateDeviceRequest;
+import com.telus.dl.devicemanagement.dto.device.DeviceDto;
+import com.telus.dl.devicemanagement.dto.device.UpdateDeviceRequest;
 import com.telus.dl.devicemanagement.service.DeviceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,7 +35,7 @@ public class DeviceController {
             summary = "get user devices"
     )
     @GetMapping
-    public List<Device> findUserDevices(
+    public List<DeviceDto> findUserDevices(
             @Parameter(name = "ownerUserProfileId", in = ParameterIn.QUERY, description = "NyTelusUser Id", required = true)
             @RequestParam(value = "ownerUserProfileId") String ownerUserProfileId) {
         return deviceService.findUserDevices(ownerUserProfileId);
@@ -46,7 +46,7 @@ public class DeviceController {
             summary = "get user devices"
     )
     @GetMapping("/{dsn}")
-    public Device findDeviceByDsn(@PathVariable("dsn") String dsn) {
+    public DeviceDto findDeviceByDsn(@PathVariable("dsn") String dsn) {
         return deviceService.findDeviceByDsn(dsn);
     }
 
@@ -55,7 +55,7 @@ public class DeviceController {
             summary = "create a user device"
     )
     @PostMapping
-    public Device createDevice(@Valid @RequestBody Device device) {
+    public DeviceDto createDevice(@Valid @RequestBody DeviceDto device) {
         return deviceService.createDevice(device);
     }
 
@@ -75,7 +75,7 @@ public class DeviceController {
             summary = "delete a device"
     )
     @DeleteMapping("/{dsn}")
-    public void deleteVertical(
+    public void deleteDevice(
             @PathVariable("dsn") String dsn) {
         deviceService.deleteDevice(dsn);
     }

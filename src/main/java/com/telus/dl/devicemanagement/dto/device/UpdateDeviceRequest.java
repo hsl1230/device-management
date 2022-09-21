@@ -1,4 +1,4 @@
-package com.telus.dl.devicemanagement.dto;
+package com.telus.dl.devicemanagement.dto.device;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.telus.dl.devicemanagement.document.device.Position;

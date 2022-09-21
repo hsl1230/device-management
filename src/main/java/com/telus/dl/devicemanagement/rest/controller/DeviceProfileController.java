@@ -1,7 +1,7 @@
 package com.telus.dl.devicemanagement.rest.controller;
 
-import com.telus.dl.devicemanagement.document.deviceprofile.DeviceProfile;
-import com.telus.dl.devicemanagement.dto.UpdateDeviceProfileRequest;
+import com.telus.dl.devicemanagement.dto.deviceprofile.DeviceProfileDto;
+import com.telus.dl.devicemanagement.dto.deviceprofile.UpdateDeviceProfileRequest;
 import com.telus.dl.devicemanagement.service.DeviceProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,7 +35,7 @@ public class DeviceProfileController {
             summary = "find device profiles of by name regular expression"
     )
     @GetMapping
-    public List<DeviceProfile> findDeviceProfiles(
+    public List<DeviceProfileDto> findDeviceProfiles(
             @Parameter(name = "regName", in = ParameterIn.QUERY, description = "regular expression to match the name", required = true)
             @RequestParam(value = "regName") String regName) {
         return deviceProfileService.findDeviceProfilesByName(regName);
@@ -46,7 +46,7 @@ public class DeviceProfileController {
             summary = "find a device profile by id"
     )
     @GetMapping("/{id}")
-    public DeviceProfile findDeviceById(@PathVariable("id") String id) {
+    public DeviceProfileDto findDeviceById(@PathVariable("id") String id) {
         return deviceProfileService.findDeviceProfileById(id);
     }
 
@@ -55,7 +55,7 @@ public class DeviceProfileController {
             summary = "create a device profile"
     )
     @PostMapping
-    public DeviceProfile createDeviceProfile(@Valid @RequestBody DeviceProfile deviceProfile) {
+    public DeviceProfileDto createDeviceProfile(@Valid @RequestBody DeviceProfileDto deviceProfile) {
         return deviceProfileService.createDeviceProfile(deviceProfile);
     }
 
@@ -75,7 +75,7 @@ public class DeviceProfileController {
             summary = "delete a device profile"
     )
     @DeleteMapping("/{id}")
-    public void deleteVertical(
+    public void deleteDeviceProfile(
             @PathVariable("id") String id) {
         deviceProfileService.deleteDeviceProfile(id);
     }

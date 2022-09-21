@@ -2,7 +2,8 @@ package com.telus.dl.devicemanagement.service;
 
 import com.telus.core.errorhandling.exception.EntityNotFoundException;
 import com.telus.dl.devicemanagement.document.deviceprofile.DeviceProfile;
-import com.telus.dl.devicemanagement.dto.UpdateDeviceProfileRequest;
+import com.telus.dl.devicemanagement.dto.deviceprofile.DeviceProfileDto;
+import com.telus.dl.devicemanagement.dto.deviceprofile.UpdateDeviceProfileRequest;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -26,8 +27,11 @@ public class DeviceProfileService {
         this.modelMapper = modelMapper;
     }
 
-    public DeviceProfile createDeviceProfile(DeviceProfile deviceProfile) {
-        return mongoTemplate.insert(deviceProfile);
+    public DeviceProfileDto createDeviceProfile(DeviceProfileDto deviceProfileDto) {
+        return modelMapper.map(
+                mongoTemplate.insert(
+                        modelMapper.map(deviceProfileDto, DeviceProfile.class)),
+                DeviceProfileDto.class);
     }
 
     public void updateDeviceProfile(String deviceProfileId, UpdateDeviceProfileRequest updateDeviceProfileRequest) {
@@ -66,7 +70,7 @@ public class DeviceProfileService {
         }
     }
 
-    public DeviceProfile findDeviceProfileById(String deviceProfileId) {
+    public DeviceProfileDto findDeviceProfileById(String deviceProfileId) {
         DeviceProfile deviceProfile = mongoTemplate.findOne(new Query().addCriteria(Criteria
                 .where("id")
                 .is(deviceProfileId)), DeviceProfile.class);
@@ -75,12 +79,15 @@ public class DeviceProfileService {
             throw new EntityNotFoundException("No device profile found for dsn=" + deviceProfileId);
         }
 
-        return deviceProfile;
+        return modelMapper.map(deviceProfile, DeviceProfileDto.class);
     }
 
-    public List<DeviceProfile> findDeviceProfilesByName(String regName) {
+    public List<DeviceProfileDto> findDeviceProfilesByName(String regName) {
         return mongoTemplate.find(new Query().addCriteria(Criteria
-                .where("name")
-                .regex(regName, "i")), DeviceProfile.class);
+                        .where("name")
+                        .regex(regName, "i")), DeviceProfile.class)
+                .stream()
+                .map(deviceProfile -> modelMapper.map(deviceProfile, DeviceProfileDto.class))
+                .toList();
     }
 }

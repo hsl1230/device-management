@@ -1,6 +1,7 @@
 package com.telus.dl.devicemanagement.service;
 
 import com.telus.dl.devicemanagement.document.device.Device;
+import com.telus.dl.devicemanagement.dto.device.DeviceDto;
 import com.telus.dl.devicemanagement.util.MockModelMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ public class DeviceServiceTest {
 
 	@Test
 	public void testCreatePrimaryUserProfile() {
-		Device device = new Device()
+		DeviceDto device = new DeviceDto()
 				.name("switch001")
 				.deviceProfileId("dell-switch")
 				.dsn("T12341234-11");

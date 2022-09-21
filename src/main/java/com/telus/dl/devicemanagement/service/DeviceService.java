@@ -2,7 +2,8 @@ package com.telus.dl.devicemanagement.service;
 
 import com.telus.core.errorhandling.exception.EntityNotFoundException;
 import com.telus.dl.devicemanagement.document.device.Device;
-import com.telus.dl.devicemanagement.dto.UpdateDeviceRequest;
+import com.telus.dl.devicemanagement.dto.device.DeviceDto;
+import com.telus.dl.devicemanagement.dto.device.UpdateDeviceRequest;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -26,8 +27,10 @@ public class DeviceService {
         this.modelMapper = modelMapper;
     }
 
-    public Device createDevice(Device device) {
-        return mongoTemplate.insert(device);
+    public DeviceDto createDevice(DeviceDto deviceDto) {
+        return modelMapper.map(
+                mongoTemplate.insert(modelMapper.map(deviceDto, Device.class)),
+                DeviceDto.class);
     }
 
     public void updateDevice(String dsn, UpdateDeviceRequest updateDeviceRequest) {
@@ -66,7 +69,7 @@ public class DeviceService {
         }
     }
 
-    public Device findDeviceByDsn(String dsn) {
+    public DeviceDto findDeviceByDsn(String dsn) {
         Device device = mongoTemplate.findOne(new Query().addCriteria(Criteria
                         .where("dsn")
                         .is(dsn)),Device.class);
@@ -75,12 +78,15 @@ public class DeviceService {
             throw new EntityNotFoundException("No device found for dsn=" + dsn);
         }
 
-        return device;
+        return modelMapper.map(device, DeviceDto.class);
     }
 
-    public List<Device> findUserDevices(String ownerUserProfileId) {
+    public List<DeviceDto> findUserDevices(String ownerUserProfileId) {
         return mongoTemplate.find(new Query().addCriteria(Criteria
-                .where("ownerUserProfileId")
-                .is(ownerUserProfileId)), Device.class);
+                        .where("ownerUserProfileId")
+                        .is(ownerUserProfileId)), Device.class)
+                .stream()
+                .map(device -> modelMapper.map(device, DeviceDto.class))
+                .toList();
     }
 }
