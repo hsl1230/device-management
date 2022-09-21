@@ -48,8 +48,8 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("Profile Management API")
-                .description("Profile Management API reference for developers")
+                .title("Device Management API")
+                .description("Device Management API reference for developers")
                 .termsOfService("http://telus.com")
                 .contact(new Contact().name("henry").email("henry.huang@telus.com"))
                 .license(new License().name("Examples License").url("henry.huang@telus.com"))
